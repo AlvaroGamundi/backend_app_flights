@@ -1,7 +1,7 @@
 import torch
 from transformers import BertForSequenceClassification
 
-#prueba cambios
+
 
 
 class ModeloBERT:
