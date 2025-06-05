@@ -57,7 +57,7 @@ class RegistroUsuario(BaseModel):
     @validator("contraseña")
     def contrasena_no_vacia(cls, v):
         if not v or not v.strip():
-            raise ValueError("La contraseña no puede estar vacía.")
+            raise ValueError("The password cannot be empty.")
         return v
 
 class LoginUsuario(BaseModel):
@@ -70,7 +70,7 @@ class TextoEntrada(BaseModel):
     @validator("texto")
     def texto_no_vacio(cls, v):
         if not str(v).strip():
-            raise ValueError("El texto no puede estar vacío.")
+            raise ValueError("The text cannot be empty.")
         return str(v)
     
 @app.get("/usuarios", response_model=List[UsuarioPublico])
@@ -84,7 +84,7 @@ def registro(usuario: RegistroUsuario, session: Session = Depends(get_session)):
         nuevo_usuario = registrar_usuario(session, usuario.nombre, usuario.apellido, usuario.email, usuario.contraseña)
         token = crear_token(nuevo_usuario)
         return {
-            "mensaje": f"Usuario '{nuevo_usuario.email}' creado con éxito.",
+            "mensaje": f"User '{nuevo_usuario.email}' created successfully.",
             "access_token": token,
             "token_type": "bearer"
         }
@@ -97,7 +97,7 @@ def registro(usuario: RegistroUsuario, session: Session = Depends(get_session)):
 def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)):
     usuario = autenticar_usuario(session, form_data.username, form_data.password)
     if not usuario:
-        raise HTTPException(status_code=400, detail="Email o contraseña incorrectos")
+        raise HTTPException(status_code=400, detail="Incorrect email or password.")
     token = crear_token(usuario)
     return {"access_token": token, "token_type": "bearer"}
 
