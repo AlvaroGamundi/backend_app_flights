@@ -119,3 +119,4 @@ def predecir_sentimiento(
 
     return {"sentimiento": salida, "usuario": usuario.email}
 
+# prueba semgrep
