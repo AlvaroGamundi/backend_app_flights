@@ -69,3 +69,12 @@ From the exploratory analysis of the text data, several key insights emerge:
   ![Tweet length in characters](images/4.jpg)
 **Conclusion:**  
 These insights confirm that **tweet length and lexical diversity are strong indicators of sentiment polarity**. Negative feedback is usually more detailed, which can be leveraged in model training by including features related to text length or richness. This justifies exploring more advanced models capable of capturing nuanced language patterns beyond simple keyword-based approaches.
+
+- **Class Balance Across Sentiment Categories**
+The dataset shows a clear imbalance across sentiment categories. The **negative** class dominates with over **8,600 tweets**, while the **neutral** and **positive** classes have approximately **2,900** and **2,100** samples, respectively.
+
+While this imbalance might suggest the need for resampling techniques such as **oversampling** or **undersampling**, it's important to consider the implications:
+
+- **Undersampling** the majority class (negative) could lead to **information loss**, which is especially harmful when using deep models like **BERT** that benefit from large and diverse datasets.
+- **Oversampling** the minority classes may introduce **overfitting**, particularly if the same samples are repeated multiple times during training.
+![Class balance](images/5.jpg)
