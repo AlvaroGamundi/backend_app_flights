@@ -54,18 +54,18 @@ From the exploratory analysis of the text data, several key insights emerge:
 
 - **Tweet Length (in words):**  
   Negative tweets tend to be longer on average, peaking around 22–25 words. In contrast, positive and neutral tweets are generally shorter and more dispersed. This suggests that users are more verbose when expressing dissatisfaction.
-  ![Words per tweet](images/1.png)
+  ![Words per tweet](images/1.jpg)
 
 - **Number of Unique Words:**  
   Negative tweets also exhibit a higher number of unique words per tweet, indicating a richer vocabulary likely used to detail complaints. Positive and neutral tweets show a more modest and uniform distribution of unique terms.
-![Unique words](images/2.png)
+![Unique words](images/2.jpg)
 
 - **Average Word Length:**  
   Across all sentiment categories, the average word length remains fairly stable, typically between 4 and 6 characters. This implies that while users may write more when unhappy, the complexity of the vocabulary used does not vary significantly with sentiment.
-  ![Average word length](images/3.png)
+  ![Average word length](images/3.jpg)
 
 - **Tweet Length (in characters):**  
   Similar to word count, tweets labeled as negative often reach the character limit (140–160 characters), whereas positive and neutral tweets are generally shorter. This reinforces the idea that users elaborate more when describing negative experiences.
-  ![Tweet length in characters](images/4.png)
+  ![Tweet length in characters](images/4.jpg)
 **Conclusion:**  
 These insights confirm that **tweet length and lexical diversity are strong indicators of sentiment polarity**. Negative feedback is usually more detailed, which can be leveraged in model training by including features related to text length or richness. This justifies exploring more advanced models capable of capturing nuanced language patterns beyond simple keyword-based approaches.
