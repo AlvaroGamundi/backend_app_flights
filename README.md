@@ -133,13 +133,14 @@ This transformation allowed the model to perform **multi-class classification** 
 
 ---
 
-🧠 Model Training with BERT
-The selected model architecture was based on BERT (bert-base-uncased), fine-tuned for multi-class sentiment classification:
+### 🧠 Model Training with BERT
 
-python
-Copiar
-Editar
+The selected model architecture was based on **BERT** (`bert-base-uncased`), fine-tuned for multi-class sentiment classification:
+
+```python
 from transformers import BertForSequenceClassification
+
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
 
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
 This configuration allows BERT to perform classification across three sentiment labels:
