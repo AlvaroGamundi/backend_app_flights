@@ -131,3 +131,31 @@ On the other hand, the target variable (`airline_sentiment`), originally a colum
 
 This transformation allowed the model to perform **multi-class classification** efficiently using a categorical loss function like **CrossEntropyLoss**.
 
+---
+
+### 🧠 Model Training
+
+After selecting **BERT** as the final model architecture, the dataset was split into **training**, **validation**, and **test** sets to properly assess generalization performance. The model was trained on the training set, evaluated on the validation set at each epoch, and finally tested on unseen data.
+
+The model used was:
+
+```python
+from transformers import BertForSequenceClassification
+
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
+
+This configuration allows BERT to perform multi-class classification with 3 output labels
+
+**Optimization and Metrics**
+
+- Optimizer: AdamW, a variant of the Adam optimizer designed specifically for Transformers, with a learning rate of 3e-5.
+
+- Loss Function: CrossEntropyLoss, suitable for multi-class classification tasks.
+
+- Evaluation Metrics:
+
+    - Weighted Precision
+
+    - Weighted Recall
+
+These metrics were computed using torchmetrics on both the training and validation sets, taking class imbalance into account.
