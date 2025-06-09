@@ -79,6 +79,8 @@ While this imbalance might suggest the need for resampling techniques such as **
 - **Oversampling** the minority classes may introduce **overfitting**, particularly if the same samples are repeated multiple times during training.
 ![Class balance](images/5.jpg)
 
+---
+
 ### 🧹 Data Cleaning
 
 At this stage, the `text` variable — containing the user tweets — was preprocessed to remove noise that could negatively affect model performance. Tweets often include a variety of elements that do not contribute to sentiment analysis and can mislead or clutter the learning process.
@@ -93,6 +95,8 @@ The following cleaning operations were applied:
 - ␣ **Normalizing whitespace:** Extra spaces were removed to avoid tokenization issues.
 
 These preprocessing steps were crucial to creating a **clean and standardized corpus**, which improves the **quality of tokenization and vectorization**, and ultimately enhances the model’s accuracy and robustness.
+
+---
 
 ### 🔄 Variable Transformation
 
@@ -111,8 +115,6 @@ The following transformations were applied:
 
 - 🔤 **Word Embeddings with Word2Vec:**  
   Applied in the case of recurrent neural networks (RNNs), where each word was transformed into a dense, fixed-size vector. These embeddings capture semantic relationships between words and were either pretrained or trained on the dataset itself.
-
----
 
 Finally, the model selected for deployment was based on **Transformers**, specifically using **BERT** with **fine-tuning of the last layers** (this process will be explained in more detail in a later section).
 
