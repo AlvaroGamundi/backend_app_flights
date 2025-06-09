@@ -179,5 +179,3 @@ To ensure optimal model performance, a validation-based checkpointing approach w
 torch.save(best_model_state, "mejor_modelo_por_precision.pt")
 ```
 This approach ensured that the best model — in terms of correctly classifying sentiments — was retained and later deployed.
-
-
