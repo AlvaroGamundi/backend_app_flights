@@ -260,4 +260,62 @@ Password protection is implemented using **bcrypt** encryption, following indust
 ```python
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
+```
+---
 
+## ☁️ Cloud Deployment
+
+To make the application available online and production-ready, a cloud-based deployment pipeline was implemented using **Docker**, **AWS ECR**, and **AWS App Runner**.
+
+### 🐳 Docker Containerization
+
+The backend application was containerized using **Docker** to ensure portability and consistency across environments. This process included:
+
+- Writing a `Dockerfile` that installs all dependencies and launches the FastAPI app
+- Copying the **trained model** directly into the Docker image so that predictions can be made without needing to reload the model externally
+- Avoiding sensitive or unnecessary files using a `.dockerignore` file
+
+#### 🔥 Dockerfile Highlights
+
+The `Dockerfile` ensured:
+
+- Lightweight image based on `python:3.10-slim`
+- Installation of dependencies via `requirements.txt`
+- Inclusion of model files and backend code
+- Command to launch FastAPI with Uvicorn
+
+#### 📁 .dockerignore
+
+To keep the image clean and secure, a `.dockerignore` file was created with the following contents:
+
+pycache/
+*.pyc
+*.pyo
+.env
+.git
+.vscode
+venv/
+env/
+*.log
+*.sqlite3
+*.db
+data/
+
+This prevents unnecessary files (such as local caches, logs, databases, and development environment folders) from being copied into the Docker image.
+
+Once the Docker image was built and tested locally, it was pushed to **AWS ECR (Elastic Container Registry)**. From there, the backend was deployed using **AWS App Runner**.
+
+### 🚀 Deployment with AWS ECR & App Runner
+
+**App Runner** allows applications to be deployed directly from Docker images (hosted in ECR) without the need to manage any servers or infrastructure manually.
+
+The deployment process involved:
+
+- Creating an **ECR** repository and pushing the image containing both the backend code and the trained model
+- Setting up an **App Runner** service connected to that repository
+- Configuring the necessary **environment variables** (such as database URL, secret key, and JWT algorithm)
+- Verifying that the backend was available over HTTPS with basic auto-scaling enabled
+
+This approach made it easy to deploy the backend to the cloud, making it publicly accessible and ready to connect with the frontend.
+
+---
