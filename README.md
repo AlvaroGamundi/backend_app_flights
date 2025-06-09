@@ -135,7 +135,15 @@ This transformation allowed the model to perform **multi-class classification** 
 
 ### 🧠 Model Training with BERT
 
-The selected model architecture was based on **BERT** (`bert-base-uncased`), fine-tuned for multi-class sentiment classification:
+After selecting BERT as the final architecture, the dataset was split into training, validation, and test sets to assess generalization performance:
+
+- The model was trained on the training set.
+
+- It was evaluated on the validation set after each epoch.
+
+- Finally, it was tested on unseen data to assess its real-world performance.
+
+The final model used was:
 
 ```python
 from transformers import BertForSequenceClassification
@@ -143,26 +151,33 @@ from transformers import BertForSequenceClassification
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3) 
 ```
 
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
-This configuration allows BERT to perform classification across three sentiment labels:
+⚙️ **Optimization and Metrics**
 
-0 → neutral
-
-1 → positive
-
-2 → negative
-
-⚙️ Optimization and Metrics
 To train and evaluate the model effectively, the following configuration was used:
 
-Optimizer: AdamW, a variant of the Adam optimizer tailored for Transformers, with a learning rate of 3e-5.
+- Optimizer: AdamW, a variant of the Adam optimizer tailored for Transformers, with a learning rate of 3e-5.
 
-Loss Function: CrossEntropyLoss, well-suited for multi-class classification.
+- Loss Function: CrossEntropyLoss, well-suited for multi-class classification.
 
-Evaluation Metrics:
+- Evaluation Metrics:
 
-Weighted Precision
+    - Weighted Precision
 
-Weighted Recall
+    - Weighted Recall
 
 These metrics were calculated using torchmetrics, taking class imbalance into account for both training and validation phases.
+
+🏆 **Best Model Selection Strategy**
+
+To ensure optimal model performance, a validation-based checkpointing approach was used:
+
+- After every epoch (and intermittently during training), the model’s performance on the validation set was evaluated.
+
+- If the validation precision improved, the current model state was saved using:
+
+```python
+torch.save(best_model_state, "mejor_modelo_por_precision.pt")
+```
+This approach ensured that the best model — in terms of correctly classifying sentiments — was retained and later deployed.
+
+
