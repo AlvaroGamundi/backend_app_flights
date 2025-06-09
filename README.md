@@ -289,16 +289,27 @@ The `Dockerfile` ensured:
 To keep the image clean and secure, a `.dockerignore` file was created with the following contents:
 
 pycache/
+
 *.pyc
+
 *.pyo
+
 .env
+
 .git
+
 .vscode
+
 venv/
+
 env/
+
 *.log
+
 *.sqlite3
+
 *.db
+
 data/
 
 This prevents unnecessary files (such as local caches, logs, databases, and development environment folders) from being copied into the Docker image.
