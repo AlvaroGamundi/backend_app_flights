@@ -125,8 +125,8 @@ To feed the text data into BERT, the input was **tokenized** into tensors using 
 
 On the other hand, the target variable (`airline_sentiment`), originally a column containing the string labels **"positive"**, **"neutral"**, and **"negative"**, was converted into a **numeric tensor** with values:
 
-- `0` → neutral 
-- `1` → positive  
+- `0` → positive  
+- `1` → neutral  
 - `2` → negative
 
 This transformation allowed the model to perform **multi-class classification** efficiently using a categorical loss function like **CrossEntropyLoss**.
@@ -196,23 +196,15 @@ This performance gain is likely due to **BERT's capacity to capture contextual i
 
 Below are the classification metrics obtained on the **test set**:
 
-          precision    recall  f1-score   support
-
- neutral     0.8438    0.7584    0.7988       178
-positive     0.7064    0.6754    0.6906       228
-negative     0.8863    0.9221    0.9038       693
-
-accuracy                         0.8444      1099
-
-
+![Test-Score](images/score.jpg)
 
 ### 🔍 Class-wise Analysis
 
-- **Negative (`2`)**: The model performs *exceptionally well* on the majority class, with an F1-score over **0.90** and a very high recall (**0.92**), meaning it successfully captures nearly all negative cases.
+- **Positive (0)**: The model achieves **0.84 precision** and **0.76 recall**, resulting in an **F1-score of 0.80**. This means it correctly identifies many positive tweets, though some are misclassified as neutral or negative. Still, when it predicts "positive", it is usually right.
 
-- **Neutral (`0`)**: The model shows solid performance (F1 ≈ **0.80**), although recall is slightly lower (**0.76**), which could mean that some neutral comments are confused with other classes. Still, precision is high (**0.84**), so when it predicts neutral, it's usually correct.
+- **Neutral (1)**: This is the most challenging class for the model, with the lowest **F1-score (0.69)**, **precision (0.71)**, and **recall (0.68)**. This likely stems from the ambiguous nature of neutral language, which often overlaps with both positive and negative expressions.
 
-- **Positive (`1`)**: This is the hardest class to predict, with the lowest F1-score (**0.69**) and recall (**0.67**). This may be due to class imbalance and the subtlety of expressing positivity in tweets. Positive tweets may also share vocabulary with neutral ones, making them harder to distinguish.
+- **Negative (2)**: This is where the model performs best. With a **0.90 F1-score** and **0.92 recall**, it captures nearly all negative tweets, and with very high **precision (0.89)**. This strong performance is expected due to the abundance and clarity of negative expressions in the dataset.
 
 ![F1-score per class](images/f1_score_by_class_blue.png)
 
