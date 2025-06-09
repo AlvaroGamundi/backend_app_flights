@@ -179,3 +179,44 @@ To ensure optimal model performance, a validation-based checkpointing approach w
 torch.save(best_model_state, "mejor_modelo_por_precision.pt")
 ```
 This approach ensured that the best model — in terms of correctly classifying sentiments — was retained and later deployed.
+
+---
+
+## 📈 Final Results
+
+For training, a **GPU provided by Google Colab** was used, which significantly accelerated the fine-tuning of the BERT model.
+
+The final model achieved an **F1-score (weighted average) of 0.84** on both the validation and test sets, indicating:
+
+- **Strong generalization performance**
+- **No signs of overfitting**
+- **~10 percentage point improvement** over other models (Naive Bayes, feedforward and recurrent neural networks)
+
+This performance gain is likely due to **BERT's capacity to capture contextual information** across entire sentences, allowing it to better understand sentiment nuances.
+
+Below are the classification metrics obtained on the **test set**:
+
+          precision    recall  f1-score   support
+
+ neutral     0.8438    0.7584    0.7988       178
+positive     0.7064    0.6754    0.6906       228
+negative     0.8863    0.9221    0.9038       693
+
+accuracy                         0.8444      1099
+
+
+
+### 🔍 Class-wise Analysis
+
+- **Negative (`2`)**: The model performs *exceptionally well* on the majority class, with an F1-score over **0.90** and a very high recall (**0.92**), meaning it successfully captures nearly all negative cases.
+
+- **Neutral (`0`)**: The model shows solid performance (F1 ≈ **0.80**), although recall is slightly lower (**0.76**), which could mean that some neutral comments are confused with other classes. Still, precision is high (**0.84**), so when it predicts neutral, it's usually correct.
+
+- **Positive (`1`)**: This is the hardest class to predict, with the lowest F1-score (**0.69**) and recall (**0.67**). This may be due to class imbalance and the subtlety of expressing positivity in tweets. Positive tweets may also share vocabulary with neutral ones, making them harder to distinguish.
+
+![F1-score per class](images/f1_score_by_class_blue.png)
+
+**Conclusion**:  
+The BERT model not only outperforms classical approaches, but also manages to maintain balanced performance across classes — especially impressive given the dataset's **class imbalance**. Fine-tuning on contextualized word embeddings clearly paid off.
+
+---
