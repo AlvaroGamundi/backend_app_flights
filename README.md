@@ -212,3 +212,52 @@ Below are the classification metrics obtained on the **test set**:
 The BERT model not only outperforms classical approaches, but also manages to maintain balanced performance across classes — especially impressive given the dataset's **class imbalance**. Fine-tuning on contextualized word embeddings clearly paid off.
 
 ---
+
+## 🚀 Production Deployment
+
+To deploy the sentiment classification system, a **production-ready architecture** was implemented, allowing users to access the application through **login or registration**.
+
+### 🔧 Backend with FastAPI
+
+The backend was developed using **FastAPI** and exposes the following main `POST` endpoints:
+
+- `/register`: Allows users to create an account  
+- `/login`: Authenticates users and returns an access token  
+- `/predict`: Receives a text input and returns a sentiment prediction along with a personalized, empathetic message
+
+Example responses based on sentiment:
+
+- **positive**:  
+  `"We're happy to hear your experience was good! We hope to have you flying with us again soon."`
+
+- **neutral**:  
+  `"Thank you for your feedback! We are constantly working to improve our service."`
+
+- **negative**:  
+  `"We're truly sorry for your experience. We will get in touch with you to improve anything that needs attention."`
+
+This approach simulates a **real-world customer service response** tailored to the detected sentiment.
+
+All endpoints are automatically documented through FastAPI's interactive interface at `/docs`, making them easy to test and integrate.
+
+### 🛠️ Authentication and Database
+
+To manage user accounts, a **SQL (PostgreSQL)** database was created using **Supabase**, where the following data is stored:
+
+- Registered user information  
+- Encrypted passwords
+
+The **backend** handles communication with the database to authenticate users. The **frontend never directly accesses** sensitive data, ensuring greater security.
+
+### 🔐 Security and Encryption
+
+Password protection is implemented using **bcrypt** encryption, following industry best practices. Additionally:
+
+- **JWT tokens** are used for authentication after login  
+- Only authenticated users can access the `/predict` endpoint  
+- Passwords are never stored in plain text
+
+```python
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
+
