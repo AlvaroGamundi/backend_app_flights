@@ -42,7 +42,7 @@ Some of the key analyses included:
 - **Number of unique words per tweet**
 - **Average word length per tweet**
 - **Total number of characters per tweet**
-- Class balance across sentiment categories
+- **Class balance across sentiment categories**
 
 This EDA step was essential to assess the **feasibility of simpler models** and guided decisions in **text cleaning**, **tokenization**, and **feature selection**.
 
@@ -135,7 +135,7 @@ This transformation allowed the model to perform **multi-class classification** 
 
 ### 🧠 Model Training with BERT
 
-After selecting BERT as the final architecture, the dataset was split into training, validation, and test sets to assess generalization performance:
+To properly assess model performance and select the best architecture, the dataset was first split into training, validation, and test sets:
 
 - The model was trained on the training set.
 
@@ -322,7 +322,7 @@ Once the Docker image was built and tested locally, it was pushed to **AWS ECR (
 
 The deployment process involved:
 
-- Creating an **ECR** repository and pushing the image containing both the backend code and the trained model
+- Creating an **ECR** repository and pushing the image containing the backend code
 - Setting up an **App Runner** service connected to that repository
 - Configuring the necessary **environment variables** (such as database URL, secret key, and JWT algorithm)
 - Verifying that the backend was available over HTTPS with basic auto-scaling enabled
