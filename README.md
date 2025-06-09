@@ -133,29 +133,34 @@ This transformation allowed the model to perform **multi-class classification** 
 
 ---
 
-### 🧠 Model Training
+🧠 Model Training with BERT
+The selected model architecture was based on BERT (bert-base-uncased), fine-tuned for multi-class sentiment classification:
 
-After selecting **BERT** as the final model architecture, the dataset was split into **training**, **validation**, and **test** sets to properly assess generalization performance. The model was trained on the training set, evaluated on the validation set at each epoch, and finally tested on unseen data.
-
-The model used was:
-
-```python
+python
+Copiar
+Editar
 from transformers import BertForSequenceClassification
 
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
+This configuration allows BERT to perform classification across three sentiment labels:
 
-This configuration allows BERT to perform multi-class classification with 3 output labels
+0 → neutral
 
-**Optimization and Metrics**
+1 → positive
 
-- Optimizer: AdamW, a variant of the Adam optimizer designed specifically for Transformers, with a learning rate of 3e-5.
+2 → negative
 
-- Loss Function: CrossEntropyLoss, suitable for multi-class classification tasks.
+⚙️ Optimization and Metrics
+To train and evaluate the model effectively, the following configuration was used:
 
-- Evaluation Metrics:
+Optimizer: AdamW, a variant of the Adam optimizer tailored for Transformers, with a learning rate of 3e-5.
 
-    - Weighted Precision
+Loss Function: CrossEntropyLoss, well-suited for multi-class classification.
 
-    - Weighted Recall
+Evaluation Metrics:
 
-These metrics were computed using torchmetrics on both the training and validation sets, taking class imbalance into account.
+Weighted Precision
+
+Weighted Recall
+
+These metrics were calculated using torchmetrics, taking class imbalance into account for both training and validation phases.
