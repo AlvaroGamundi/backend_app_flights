@@ -140,7 +140,8 @@ The selected model architecture was based on **BERT** (`bert-base-uncased`), fin
 ```python
 from transformers import BertForSequenceClassification
 
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3) 
+```
 
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=3)
 This configuration allows BERT to perform classification across three sentiment labels:
