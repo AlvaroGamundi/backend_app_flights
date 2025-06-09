@@ -78,3 +78,54 @@ While this imbalance might suggest the need for resampling techniques such as **
 - **Undersampling** the majority class (negative) could lead to **information loss**, which is especially harmful when using deep models like **BERT** that benefit from large and diverse datasets.
 - **Oversampling** the minority classes may introduce **overfitting**, particularly if the same samples are repeated multiple times during training.
 ![Class balance](images/5.jpg)
+
+### 🧹 Data Cleaning
+
+At this stage, the `text` variable — containing the user tweets — was preprocessed to remove noise that could negatively affect model performance. Tweets often include a variety of elements that do not contribute to sentiment analysis and can mislead or clutter the learning process.
+
+The following cleaning operations were applied:
+
+- 🔗 **Removing URLs:** Links were stripped from the text since they provide no useful sentiment information and can distort vector representations.
+- 🧑‍💻 **Replacing user mentions:** Mentions (e.g., `@username`) were replaced with a generic placeholder to preserve structure without introducing noise.
+- 😀 **Removing emojis:** Emojis were removed to simplify the text and maintain consistency across samples.
+- 🙂 **Eliminating emoticons:** Classic emoticons like `:)` or `:(` were also removed, as they may not be interpreted reliably by standard tokenizers.
+- #️⃣ **Removing the '#' from hashtags:** Hashtag symbols were deleted while preserving the associated words (e.g., `#delayed` → `delayed`) to retain semantic meaning.
+- ␣ **Normalizing whitespace:** Extra spaces were removed to avoid tokenization issues.
+
+These preprocessing steps were crucial to creating a **clean and standardized corpus**, which improves the **quality of tokenization and vectorization**, and ultimately enhances the model’s accuracy and robustness.
+
+### 🔄 Variable Transformation
+
+Before detailing the specific transformations applied, it's important to note that multiple models were tested prior to selecting the final one. These included:
+
+- **Naive Bayes**
+- **Simple feedforward neural networks**
+- **Recurrent neural networks (RNNs)**
+
+Each of these models required input features in **different formats**, so the text data needed to be transformed accordingly.
+
+The following transformations were applied:
+
+- 📈 **TF-IDF (Term Frequency – Inverse Document Frequency):**  
+  Used as input for both Naive Bayes and deep feedforward neural networks. This method converts text into sparse numeric vectors by capturing the importance of each word in a document relative to the entire corpus.
+
+- 🔤 **Word Embeddings with Word2Vec:**  
+  Applied in the case of recurrent neural networks (RNNs), where each word was transformed into a dense, fixed-size vector. These embeddings capture semantic relationships between words and were either pretrained or trained on the dataset itself.
+
+---
+
+Finally, the model selected for deployment was based on **Transformers**, specifically using **BERT** with **fine-tuning of the last layers** (this process will be explained in more detail in a later section).
+
+To feed the text data into BERT, the input was **tokenized** into tensors using a pre-trained BERT tokenizer. This process generated two key components:
+
+- **`input_ids`**: the encoded representation of each token (word/subword) in the input text.
+- **`attention_mask`**: a binary mask that indicates which tokens should be attended to (`1`) and which are padding (`0`). This helps BERT ignore padded tokens during computation.
+
+On the other hand, the target variable (`airline_sentiment`), originally a column containing the string labels **"positive"**, **"neutral"**, and **"negative"**, was converted into a **numeric tensor** with values:
+
+- `0` → neutral 
+- `1` → positive  
+- `2` → negative
+
+This transformation allowed the model to perform **multi-class classification** efficiently using a categorical loss function like **CrossEntropyLoss**.
+
