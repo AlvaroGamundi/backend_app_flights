@@ -330,3 +330,65 @@ The deployment process involved:
 This approach made it easy to deploy the backend to the cloud, making it publicly accessible and ready to connect with the frontend.
 
 ---
+
+## 🌐 Frontend Deployment with Vercel
+
+The frontend of the application was developed using **React** and deployed via **Vercel**, a platform that offers instant hosting for frontend applications with continuous integration.
+
+### 🧱 Frontend Stack and Structure
+
+The frontend is a **SPA (Single Page Application)** built with React, organized into three main components:
+
+- `Register`: Allows users to create an account by sending a `POST` request to the `/registro` endpoint.
+- `Login`: Authenticates users and stores a **JWT token** in `localStorage`.
+- `Prediction`: Lets users input a text and receive a sentiment prediction via the `/predecir` endpoint.
+
+Navigation between components is managed using `useState`, switching between "login", "register", and "prediction" views based on the user's authentication status.
+
+### 🔄 Communication with the Backend
+
+The frontend communicates with the backend via `fetch` requests using the `POST` method. Key aspects include:
+
+- **Token-based authentication**: The JWT token obtained during login is stored in `localStorage` and included in the `Authorization` header when making requests to `/predecir`.
+- The following **endpoints** are consumed from the backend hosted on App Runner:
+  - `/login`
+  - `/registro`
+  - `/predecir`
+
+The frontend properly handles authentication errors and model responses, displaying informative messages to the user.
+
+### 🚀 Deployment on Vercel
+
+The React app was deployed on **Vercel**, which automatically detects changes pushed to GitHub and performs the build and deployment process seamlessly.
+
+---
+
+## 💡 Future Work
+
+Although the application is functional and production-ready, there are several areas that could be improved or expanded in future iterations:
+
+- **Improve performance on the "neutral" class**  
+  The model shows lower precision and recall for neutral tweets. Future work could explore techniques such as:
+  - Data augmentation for underrepresented classes
+  - Incorporating sentiment lexicons or external context
+
+- **Add user feedback collection**  
+  Allow users to rate the accuracy of the prediction and use that feedback to improve model retraining.
+
+- **Integrate CI/CD pipeline**  
+  Automate testing and deployment for both backend and frontend using tools like GitHub Actions.
+
+- **Add password recovery and email confirmation**  
+  Improve the authentication flow by adding options for password reset and verifying user emails via Supabase or a third-party service.
+
+- **Multilingual support**  
+  Extend the model to classify sentiment in other languages, such as Spanish or French, using multilingual models like `bert-base-multilingual-cased`.
+
+- **Analytics dashboard for admins**  
+  Create a dashboard where admins (e.g., airline staff) can see aggregated sentiment trends and filter feedback by time, sentiment, or keywords.
+
+---
+
+
+
+
